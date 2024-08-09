@@ -32,6 +32,7 @@ function randomChildElem(elem: HTMLElement) {
         if (imgElem.alt === "") {
             imgElem.alt = img.name;
         }
+        imgElem.title = img.name;
         imgContainer.appendChild(imgElem);
         galleryContainer.appendChild(imgContainer);
     }
