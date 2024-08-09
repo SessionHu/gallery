@@ -1,3 +1,16 @@
+#background-main {
+    background-image: url(https://static.xhustudio.eu.org/images/webp/Miracle_Forest__VIP_Mix__jacket.webp);
+    background-position: center;
+    background-size: cover;
+    top: -4px;
+    bottom: -4px;
+    left: -4px;
+    right: -4px;
+    position: fixed;
+    z-index: -1;
+    filter: blur(4px);
+}
+
 #gallery-container {
     display: flex;
     flex-wrap: wrap;
@@ -42,7 +55,8 @@
 }
 
 .img-desc > div {
-    background-color: #0001;
+    background-color: #23292ecc;
+    color: #fff;
     line-height: 100%;
     padding-top: 6px;
 }

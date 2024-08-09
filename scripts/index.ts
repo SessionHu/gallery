@@ -30,7 +30,9 @@ function randomChildElem(elem: HTMLElement) {
 
 (async () => {
     // show loading layer
-    const loadLayer: number = layer.load(1);
+    const loadLayer: number = layer.load(1, {
+        shade: [.8, "#000"]
+    });
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
     // fetch
     const json: FitROMIndex = await getIndexJson();
@@ -64,6 +66,5 @@ function randomChildElem(elem: HTMLElement) {
         photos: ".img-container"
     });
     // close loading layer
-    galleryContainer.classList.remove("layui-hide-v");
     layer.close(loadLayer);
 })();
