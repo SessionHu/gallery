@@ -1,6 +1,12 @@
 declare const getIndexJson: () => Promise<FitROMIndex>;
 declare const getImage: (paths: string[]) => Promise<HTMLImageElement>;
 
+declare const layer: {
+    load: (icon: number, options?: any) => number,
+    photos: (options: any) => void,
+    close: (index: number, callback?: () => void ) => void
+};
+
 interface FitROMIndex {
     img: {
         name: string,
@@ -23,11 +29,16 @@ function randomChildElem(elem: HTMLElement) {
 }
 
 (async () => {
+    // show loading layer
+    const loadLayer: number = layer.load(1);
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
+    galleryContainer.style.visibility = "hidden";
+    // fetch
     const json: FitROMIndex = await getIndexJson();
     for (const img of json.img) {
         const imgContainer: HTMLElement = document.createElement("div");
         imgContainer.classList.add("img-container");
+        imgContainer.classList.add("layui-padding-1");
         const imgElem = await getImage(img.path);
         if (imgElem.alt === "") {
             imgElem.alt = img.name;
@@ -36,5 +47,13 @@ function randomChildElem(elem: HTMLElement) {
         imgContainer.appendChild(imgElem);
         galleryContainer.appendChild(imgContainer);
     }
+    // random child elements
     randomChildElem(galleryContainer);
+    // big photo viewer
+    layer.photos({
+        photos: ".img-container"
+    });
+    // close loading layer
+    galleryContainer.style.visibility = "visible";
+    layer.close(loadLayer);
 })();
