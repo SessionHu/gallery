@@ -32,19 +32,29 @@ function randomChildElem(elem: HTMLElement) {
     // show loading layer
     const loadLayer: number = layer.load(1);
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
-    galleryContainer.style.visibility = "hidden";
     // fetch
     const json: FitROMIndex = await getIndexJson();
     for (const img of json.img) {
+        // div
         const imgContainer: HTMLElement = document.createElement("div");
         imgContainer.classList.add("img-container");
-        imgContainer.classList.add("layui-padding-1");
+        // img
         const imgElem = await getImage(img.path);
-        if (imgElem.alt === "") {
-            imgElem.alt = img.name;
-        }
-        imgElem.title = img.name;
+        imgElem.title = imgElem.alt;
+        imgElem.alt = img.name;
+        if (imgElem.title === "") imgElem.title = img.name;
         imgContainer.appendChild(imgElem);
+        // desc
+        const imgDesc: HTMLDivElement = document.createElement("div");
+        imgDesc.className = "img-desc";
+        imgDesc.innerHTML = `
+            <div>
+                <span class="img-desc-name">${img.name}</span><br />
+                <span class="img-desc-date layui-font-12">${new Date(img.mtime * 1000).toLocaleString()}</span>
+            </div>
+        `;
+        imgContainer.appendChild(imgDesc);
+        // append
         galleryContainer.appendChild(imgContainer);
     }
     // random child elements
@@ -54,6 +64,6 @@ function randomChildElem(elem: HTMLElement) {
         photos: ".img-container"
     });
     // close loading layer
-    galleryContainer.style.visibility = "visible";
+    galleryContainer.classList.remove("layui-hide-v");
     layer.close(loadLayer);
 })();
