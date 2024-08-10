@@ -45,15 +45,16 @@ function randomChildElem(elem: HTMLElement) {
         imgElem.title = imgElem.alt;
         imgElem.alt = img.name;
         if (imgElem.title === "") imgElem.title = img.name;
-        imgContainer.appendChild(imgElem);
+        const imgClipper: HTMLDivElement = document.createElement("div");
+        imgClipper.classList.add("img-clipper");
+        imgClipper.appendChild(imgElem);
+        imgContainer.appendChild(imgClipper);
         // desc
         const imgDesc: HTMLDivElement = document.createElement("div");
         imgDesc.className = "img-desc";
         imgDesc.innerHTML = `
-            <div>
-                <span class="img-desc-name">${img.name}</span>
-                <span class="img-desc-date layui-font-12">${new Date(img.mtime * 1000).toLocaleString()}</span>
-            </div>
+            <span class="img-desc-name">${img.name}</span>
+            <span class="img-desc-date">${new Date(img.mtime * 1000).toLocaleString()}</span>
         `;
         imgContainer.appendChild(imgDesc);
         // append
