@@ -13,10 +13,25 @@
     filter: blur(4px);
 }
 
+.layui-nav {
+    background-color: transparent;
+    font-family: monospace;
+    width: max-content;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.layui-nav-bar,
+.layui-nav .layui-this::after {
+    background-color: #6cf;
+}
+
 #gallery-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding-top: 8px;
     padding-right: 32px;
 }
 
