@@ -51,7 +51,7 @@ function randomChildElem(elem: HTMLElement) {
         imgDesc.className = "img-desc";
         imgDesc.innerHTML = `
             <div>
-                <span class="img-desc-name">${img.name}</span><br />
+                <span class="img-desc-name">${img.name}</span>
                 <span class="img-desc-date layui-font-12">${new Date(img.mtime * 1000).toLocaleString()}</span>
             </div>
         `;
