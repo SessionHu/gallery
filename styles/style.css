@@ -2,10 +2,10 @@
     background-image: url(https://static.xhustudio.eu.org/images/webp/Miracle_Forest__VIP_Mix__jacket.webp);
     background-position: center;
     background-size: cover;
-    top: -4px;
-    bottom: -4px;
-    left: -4px;
-    right: -4px;
+    top: -6px;
+    bottom: -6px;
+    left: -6px;
+    right: -6px;
     position: fixed;
     z-index: -1;
     filter: blur(4px);
@@ -21,7 +21,8 @@
 .img-container {
     width: 200px;
     height: 114px;
-    padding: 4px 4px 32px 4px;
+    padding: 4px 4px 36px 4px;
+    transform: skew(-12.3690615deg);
 }
 
 .img-container > img {
@@ -30,27 +31,26 @@
     width: calc(100% + 25px);
     height: 114px;
     object-fit: cover;
+    transform: skew(12.3690615deg);
 }
 
 .img-container:hover > img {
-    transform: scale(1.05);
+    transform: scale(1.05) skew(12.3690615deg);
 }
 
 .img-container > .img-desc {
     position: relative;
     top: -114px;
-    left: 0;
+    left: 12.5px;
     z-index: -1;
     transition: all 0.2s;
     display: block;
     height: 114px;
-    width: calc(100% + 25px);
-    clip-path: polygon(25px 0%, 100% 0%, calc(100% - 25px) 100%, 0% 100%);
+    width: calc(100% - 0.2px);
 }
 
 .img-container:hover > .img-desc {
     top: 0;
-    left: -25px;
     transform: scale(1.05);
 }
 
@@ -59,12 +59,18 @@
     color: #fff;
     line-height: 100%;
     padding-top: 6px;
+    box-shadow: 10px 5px 5px #0004;
+}
+
+.img-desc > div > span {
+    transform: skew(12.3690615deg);
+    display: inline-block;
 }
 
 .img-desc-name {
-    padding-left: 26px;
+    padding-left: 2px;
 }
 
 .img-desc-date {
-    padding-left: 22px;
+    padding-left: 2px;
 }
