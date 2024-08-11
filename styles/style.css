@@ -15,7 +15,7 @@
 
 .layui-nav {
     background-color: transparent;
-    font-family: monospace;
+    font-family: 'JetBrains Mono', monospace;
     width: max-content;
     position: sticky;
     top: 0;
@@ -55,12 +55,12 @@
 
 .img-clipper > img {
     transition: transform 0.2s;
-    width: calc(100% + 25px);
+    width: calc(100% + 25.5px);
     height: 100%;
     object-fit: cover;
     transform: skew(12.3690615deg);
     position: relative;
-    left: -12.5px;
+    left: -12.55px;
 }
 
 .img-container > .img-desc {
