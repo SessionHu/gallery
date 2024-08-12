@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+/* global */
+
 :root {
     scrollbar-width: thin;
     --skew: skew(12.3690615deg);
@@ -7,6 +9,8 @@
     --bg-black: #23292ecc;
     --box-shadow: 5px 5px 5px #0004;
 }
+
+/* background */
 
 #background-main {
     background-image: url(https://static.xhustudio.eu.org/images/webp/Miracle_Forest__VIP_Mix__jacket.webp);
@@ -20,6 +24,8 @@
     z-index: -1;
     filter: blur(4px);
 }
+
+/* layui */
 
 .layui-nav {
     background-color: var(--bg-black);
@@ -47,6 +53,19 @@
 .layui-nav .layui-this::after {
     background-color: #6cf;
 }
+
+.layui-layer-photos-header {
+    transform: var(--skew-n);
+    padding: 0 24px;
+    left: -24px;
+}
+
+.layui-layer-photos-header .layui-icon {
+    transform: var(--skew);
+    display: inline-block;
+}
+
+/* gallery */
 
 #gallery-container {
     display: flex;
