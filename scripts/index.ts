@@ -64,7 +64,8 @@ function randomChildElem(elem: HTMLElement) {
     randomChildElem(galleryContainer);
     // big photo viewer
     layer.photos({
-        photos: ".img-container"
+        photos: ".img-container",
+        shade: [.6, "#000"]
     });
     // close loading layer
     layer.close(loadLayer);

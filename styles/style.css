@@ -54,15 +54,22 @@
     background-color: #6cf;
 }
 
-.layui-layer-photos-header {
+.layui-layer-photos-toolbar {
     transform: var(--skew-n);
-    padding: 0 24px;
-    left: -24px;
+    width: max-content;
+    margin: 0 auto;
 }
 
 .layui-layer-photos-header .layui-icon {
     transform: var(--skew);
     display: inline-block;
+}
+
+.layui-layer-photos-footer {
+    --tan-offset: 11.40350875px;
+    transform: unset;
+    clip-path: polygon(var(--tan-offset) 0%, 0% 100%, calc(100% - var(--tan-offset)) 100%, 100% 0%);
+    padding: 0 var(--tan-offset);
 }
 
 /* gallery */
