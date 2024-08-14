@@ -4,7 +4,7 @@
 
 :root {
     scrollbar-width: thin;
-    --skew: skew(12.3690615deg);
+    --skew: skew(12.3690615deg); /* tan-1(114/25) */
     --skew-n: skew(-12.3690615deg);
     --bg-black: #23292ecc;
     --box-shadow: 5px 5px 5px #0004;
@@ -32,7 +32,6 @@
     font-family: 'JetBrains Mono', monospace;
     position: fixed;
     top: 0;
-    left: -6px;
     padding: 0 12px;
     z-index: 1;
     transform: var(--skew-n);
@@ -44,7 +43,7 @@
     line-height: 48px;
 }
 
-.layui-nav .layui-nav-item a {
+.layui-nav .layui-nav-item * {
     transform: var(--skew);
     color: #fffd;
 }
@@ -66,10 +65,36 @@
 }
 
 .layui-layer-photos-footer {
-    --tan-offset: 11.40350875px;
+    --tan-offset: 11.40350875px; /* 52 * tan(--skew/skew) */
     transform: unset;
     clip-path: polygon(var(--tan-offset) 0%, 0% 100%, calc(100% - var(--tan-offset)) 100%, 100% 0%);
     padding: 0 var(--tan-offset);
+}
+
+/* nav */
+
+#navnav {
+    left: -6px;
+}
+
+#navset {
+    right: -6px;
+}
+
+#navset a {
+    display: inline-block;
+    width: 24px;
+    padding: 0;
+    text-align: center;
+}
+
+#navset a::before {
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+#navset a:hover:before {
+    transform: rotate(180deg);
 }
 
 /* gallery */

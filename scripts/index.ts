@@ -1,11 +1,25 @@
 declare const getIndexJson: () => Promise<FitROMIndex>;
 declare const getImage: (paths: string[]) => Promise<HTMLImageElement>;
 
-declare const layer: {
+type Layer = {
     load: (icon: number, options?: any) => number,
+    open: (options: any) => void,
+    tips: (content: string, elem: Element | string, options?: any) => void,
     photos: (options: any) => void,
     close: (index: number, callback?: () => void ) => void
 };
+
+declare const layui: {
+    flow: {
+        lazyimg: (options: any) => void
+    },
+    layer: Layer,
+    util: {
+        on: (attr: string, events: any, options?: any) => void
+    }
+};
+
+declare const layer: Layer;
 
 interface FitROMIndex {
     img: {
@@ -66,6 +80,15 @@ function randomChildElem(elem: HTMLElement) {
     layer.photos({
         photos: ".img-container",
         shade: [.6, "#000"]
+    });
+    // set-btn
+    layui.util.on("lay-on", {
+        "set-btn": function () {
+            layer.tips("这个功能还没实现呢qwq", this, {
+                tips: [3, "var(--bg-black)"]
+            });
+            window.setTimeout(() => this.classList.remove("layui-this"), 200);
+        }
     });
     // close loading layer
     layer.close(loadLayer);
