@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script>
+        if (window.location.pathname !== "/") {
+            window.location.replace("/");
+            document.body.innerHTML = "Never open this page directly.";
+        }
+    </script>
+</head>
+<body>
+    <div class="set-container">
+        <div id="set-main" class="layui-form">
+            <div class="set-section">
+                <div class="set-title">青少年模式</div>
+                <div class="set-ctl-switch layui-icon">
+                    <input type="checkbox" lay-skin="switch" title="&#xe605;|&shy;" />
+                </div>
+            </div>
+            <div class="set-footer">
+                <span>(C) 2024 SessionHu</span>
+                <span>|</span>
+                <span>CC-BY-NC-SA-4.0</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

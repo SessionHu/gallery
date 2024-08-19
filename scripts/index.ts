@@ -14,6 +14,9 @@ declare const layui: {
         lazyimg: (options: any) => void
     },
     layer: Layer,
+    form: {
+        render: (type?: string, filter?: string) => void
+    },
     util: {
         on: (attr: string, events: any, options?: any) => void
     }
@@ -42,6 +45,10 @@ function randomChildElem(elem: HTMLElement) {
     }
 }
 
+async function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 (async () => {
     // show loading layer
     const loadLayer: number = layer.load(1, {
@@ -56,6 +63,7 @@ function randomChildElem(elem: HTMLElement) {
         imgContainer.classList.add("img-container");
         // img
         const imgElem = await getImage(img.path);
+        // imgElem.src = ""; // for debug
         imgElem.title = imgElem.alt;
         imgElem.alt = img.name;
         if (imgElem.title === "") imgElem.title = img.name;
@@ -76,19 +84,38 @@ function randomChildElem(elem: HTMLElement) {
     }
     // random child elements
     randomChildElem(galleryContainer);
+    // fetch settings
+    const tmpdiv = document.createElement("div");
+    tmpdiv.innerHTML = await (await fetch("/settings.html")).text();
+    // set-btn
+    const setcontainer = document.body.querySelector(".set-container") as HTMLElement;
+    layui.util.on("lay-on", {
+        "set-btn": async function () {
+            window.setTimeout(() => this.classList.remove("layui-this"), 200);
+            if (setcontainer.innerHTML !== "") {
+                // hide
+                setcontainer.style.opacity = "0";
+                await sleep(100);
+                setcontainer.innerHTML = "";
+            } else {
+                // show
+                setcontainer.innerHTML = tmpdiv.querySelector(".set-container")?.innerHTML as string;
+                layui.form.render();
+                setcontainer.style.opacity = "1";
+            }
+        }
+    });
     // big photo viewer
+    document.querySelectorAll(".img-container").forEach((elem: Element) => {
+        elem.addEventListener("click", async () => {
+            setcontainer.style.opacity = "0";
+            await sleep(100);
+            setcontainer.innerHTML = "";
+        });
+    });
     layer.photos({
         photos: ".img-container",
         shade: [.6, "#000"]
-    });
-    // set-btn
-    layui.util.on("lay-on", {
-        "set-btn": function () {
-            layer.tips("这个功能还没实现呢qwq", this, {
-                tips: [3, "var(--bg-black)"]
-            });
-            window.setTimeout(() => this.classList.remove("layui-this"), 200);
-        }
     });
     // close loading layer
     layer.close(loadLayer);
