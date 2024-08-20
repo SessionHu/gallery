@@ -6,7 +6,8 @@ type Layer = {
     open: (options: any) => void,
     tips: (content: string, elem: Element | string, options?: any) => void,
     photos: (options: any) => void,
-    close: (index: number, callback?: () => void ) => void
+    close: (index: number, callback?: () => void ) => void,
+    msg: (content: string, options?: any, end?: () => void) => number,
 };
 
 declare const layui: {
@@ -15,11 +16,14 @@ declare const layui: {
     },
     layer: Layer,
     form: {
-        render: (type?: string, filter?: string) => void
+        render: (type?: string, filter?: string) => void,
+        on: (eventfiter: string, callback: (data: any) => void) => void,
+        val: (filter: string, obj: any) => any
     },
     util: {
         on: (attr: string, events: any, options?: any) => void
-    }
+    },
+    data: (table: string, settings?: { key: string, value?: any }) => any
 };
 
 declare const layer: Layer;
@@ -47,6 +51,19 @@ function randomChildElem(elem: HTMLElement) {
 
 async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function teenmode(enable: boolean) {
+    if (enable) {
+        layui.layer.msg("Teen mode enabled");
+        document.querySelectorAll(".img-container img").forEach((elem: Element) => {
+            (elem as HTMLElement).style.filter = "blur(4px)";
+        });
+    } else {
+        document.querySelectorAll(".img-container img").forEach((elem: Element) => {
+            (elem as HTMLElement).style.filter = "none";
+        });
+    }
 }
 
 (async () => {
@@ -84,10 +101,15 @@ async function sleep(ms: number) {
     }
     // random child elements
     randomChildElem(galleryContainer);
+    // settings preset
+    if (Object.keys(layui.data("sessxgallery")).length === 0) {
+        layui.data("sessxgallery", { key: "teen", value: true });
+    }
+    teenmode(layui.data("sessxgallery", {key: "teen"}));
     // fetch settings
     const tmpdiv = document.createElement("div");
     tmpdiv.innerHTML = await (await fetch("/settings.html")).text();
-    // set-btn
+    // settings entrace
     const setcontainer = document.body.querySelector(".set-container") as HTMLElement;
     layui.util.on("lay-on", {
         "set-btn": async function () {
@@ -98,12 +120,24 @@ async function sleep(ms: number) {
                 await sleep(100);
                 setcontainer.innerHTML = "";
             } else {
-                // show
+                // render
                 setcontainer.innerHTML = tmpdiv.querySelector(".set-container")?.innerHTML as string;
                 layui.form.render();
+                // value
+                layui.form.val("set-form", {
+                    "ctl-switch-teen": layui.data("sessxgallery", {key: "teen"})
+                });
+                // show
                 setcontainer.style.opacity = "1";
             }
         }
+    });
+    // settings section
+    layui.form.on('switch(ctl-switch-teen)', (data: any) => {
+        teenmode(layui.data("sessxgallery", {
+            key: "teen",
+            value: data.othis[0].classList.contains("layui-form-onswitch")
+        }));
     });
     // big photo viewer
     document.querySelectorAll(".img-container").forEach((elem: Element) => {

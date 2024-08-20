@@ -101,6 +101,10 @@
     margin-left: 21px;
 }
 
+div#layui-layer-shade1.layui-layer-shade {
+    filter: blur(2px);
+}
+
 /* nav */
 
 #navnav {
@@ -248,7 +252,8 @@
 }
 
 .set-footer > * {
-    padding-right: 2px;
+    padding-right: 1px;
+    white-space: nowrap;
 }
 
 .set-footer a {
