@@ -139,14 +139,21 @@ function teenmode(enable: boolean) {
             value: data.othis[0].classList.contains("layui-form-onswitch")
         }));
     });
-    // big photo viewer
-    document.querySelectorAll(".img-container").forEach((elem: Element) => {
-        elem.addEventListener("click", async () => {
-            setcontainer.style.opacity = "0";
-            await sleep(100);
-            setcontainer.innerHTML = "";
-        });
+    // close settings on click
+    const setbtn = document.querySelector("#navset a");
+    document.body.addEventListener("click", async (ev: MouseEvent) => {
+        console.log(ev.target);
+        if (setcontainer.contains(ev.target as Node) ||
+            ev.target === setbtn ||
+            setcontainer.innerHTML === "")
+        {
+            return;
+        }
+        setcontainer.style.opacity = "0";
+        await sleep(100);
+        setcontainer.innerHTML = "";
     });
+    // big photo viewer
     layer.photos({
         photos: ".img-container",
         shade: [.6, "#000"]
