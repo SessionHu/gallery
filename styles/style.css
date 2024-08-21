@@ -162,12 +162,13 @@ div#layui-layer-shade1.layui-layer-shade {
 
 .img-clipper > img {
     transition: filter 0.2s;
-    width: calc(100% + 25.5px);
-    height: 100%;
+    width: calc(100% + 25.5px + 8px);
+    height: calc(100% + 8px);
     object-fit: cover;
     transform: var(--skew);
     position: relative;
-    left: -12.55px;
+    left: calc(-12.55px - 4px);
+    top: -4px;
 }
 
 .img-container > .img-desc {
