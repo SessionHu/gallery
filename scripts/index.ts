@@ -36,21 +36,16 @@ interface FitROMIndex {
     }[]
 }
 
-function randomChildElem(elem: HTMLElement) {
-    const childElems: Element[] = Array.from(elem.children);
-    const newElems: Element[] = [];
-    while (childElems.length > 0) {
-        const randomIndex = Math.floor(Math.random() * childElems.length);
-        newElems.push(childElems.splice(randomIndex, 1)[0]);
-    }
-    elem.innerHTML = "";
-    for (const newElem of newElems) {
-        elem.appendChild(newElem);
-    }
+function shufArray<T>(arr: T[]) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 async function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function teenmode(enable: boolean) {
@@ -74,12 +69,16 @@ function teenmode(enable: boolean) {
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
     // fetch
     const json: FitROMIndex = await getIndexJson();
+    shufArray(json.img);
+    const promises = new Array<Promise<HTMLElement>>();
     for (const img of json.img) {
+      promises.push(new Promise<HTMLImageElement>((resolve) => {
+        // img
+        resolve(getImage(img.path));
+      }).then((imgElem) => {
         // div
         const imgContainer: HTMLElement = document.createElement("div");
         imgContainer.classList.add("img-container");
-        // img
-        const imgElem = await getImage(img.path);
         // imgElem.src = ""; // for debug
         imgElem.title = imgElem.alt;
         imgElem.alt = img.name;
@@ -98,9 +97,10 @@ function teenmode(enable: boolean) {
         imgContainer.appendChild(imgDesc);
         // append
         galleryContainer.appendChild(imgContainer);
+        return imgContainer;
+      }));
     }
-    // random child elements
-    randomChildElem(galleryContainer);
+    Promise.all(promises);
     // settings preset
     if (Object.keys(layui.data("sessxgallery")).length === 0) {
         layui.data("sessxgallery", { key: "teen", value: true });
@@ -142,7 +142,6 @@ function teenmode(enable: boolean) {
     // close settings on click
     const setbtn = document.querySelector("#navset a");
     document.body.addEventListener("click", async (ev: MouseEvent) => {
-        console.log(ev.target);
         if (setcontainer.contains(ev.target as Node) ||
             ev.target === setbtn ||
             setcontainer.innerHTML === "")
