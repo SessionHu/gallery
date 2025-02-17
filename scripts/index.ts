@@ -1,5 +1,5 @@
-declare const getIndexJson: () => Promise<FitROMIndex>;
-declare const getImage: (paths: string[]) => Promise<HTMLImageElement>;
+declare const getIndexJson: () => Promise<{img: FitROMItem[]}>;
+declare const getImage: (item: FitROMItem) => Promise<HTMLImageElement>;
 
 type Layer = {
     load: (icon: number, options?: any) => number,
@@ -28,12 +28,11 @@ declare const layui: {
 
 declare const layer: Layer;
 
-interface FitROMIndex {
-    img: {
-        name: string,
-        mtime: number,
-        path: string[]
-    }[]
+interface FitROMItem {
+  name: string,
+  mtime: number,
+  raw?: string[],
+  hashed?: string[]
 }
 
 function shufArray<T>(arr: T[]) {
@@ -68,13 +67,13 @@ function teenmode(enable: boolean) {
     });
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
     // fetch
-    const json: FitROMIndex = await getIndexJson();
+    const json = await getIndexJson();
     shufArray(json.img);
     const elems: Promise<HTMLDivElement>[] = [];
     for (const img of json.img) {
       elems.push(new Promise<HTMLImageElement>((resolve) => {
         // img
-        resolve(getImage(img.path));
+        resolve(getImage(img));
       }).then((imgElem) => {
         // div
         const imgContainer = document.createElement("div");
