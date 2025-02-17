@@ -70,29 +70,29 @@ function teenmode(enable: boolean) {
     // fetch
     const json: FitROMIndex = await getIndexJson();
     shufArray(json.img);
-    const promises = new Array<Promise<HTMLElement>>();
+    const elems: Promise<HTMLDivElement>[] = [];
     for (const img of json.img) {
-      promises.push(new Promise<HTMLImageElement>((resolve) => {
+      elems.push(new Promise<HTMLImageElement>((resolve) => {
         // img
         resolve(getImage(img.path));
       }).then((imgElem) => {
         // div
-        const imgContainer: HTMLElement = document.createElement("div");
+        const imgContainer = document.createElement("div");
         imgContainer.classList.add("img-container");
         // imgElem.src = ""; // for debug
         imgElem.title = imgElem.alt;
         imgElem.alt = img.name;
-        if (imgElem.title === "") imgElem.title = img.name;
-        const imgClipper: HTMLDivElement = document.createElement("div");
+        if (!imgElem.title) imgElem.title = img.name;
+        const imgClipper = document.createElement("div");
         imgClipper.classList.add("img-clipper");
         imgClipper.appendChild(imgElem);
         imgContainer.appendChild(imgClipper);
         // desc
-        const imgDesc: HTMLDivElement = document.createElement("div");
+        const imgDesc = document.createElement("div");
         imgDesc.className = "img-desc";
         imgDesc.innerHTML = `
-            <span class="img-desc-name">${img.name}</span>
-            <span class="img-desc-date">${new Date(img.mtime * 1000).toLocaleString()}</span>
+          <span class="img-desc-name">${img.name}</span>
+          <span class="img-desc-date">${new Date(img.mtime * 1000).toLocaleString()}</span>
         `;
         imgContainer.appendChild(imgDesc);
         // append
@@ -100,9 +100,9 @@ function teenmode(enable: boolean) {
         return imgContainer;
       }));
     }
-    Promise.all(promises);
+    await Promise.all(elems);
     // settings preset
-    if (Object.keys(layui.data("sessxgallery")).length === 0) {
+    if (!Object.keys(layui.data("sessxgallery")).length) {
         layui.data("sessxgallery", { key: "teen", value: true });
     }
     teenmode(layui.data("sessxgallery", {key: "teen"}));
@@ -117,8 +117,7 @@ function teenmode(enable: boolean) {
             if (setcontainer.innerHTML !== "") {
                 // hide
                 setcontainer.style.opacity = "0";
-                await sleep(100);
-                setcontainer.innerHTML = "";
+                setTimeout(() => setcontainer.innerHTML = "", 1e2);
             } else {
                 // render
                 setcontainer.innerHTML = tmpdiv.querySelector(".set-container")?.innerHTML as string;
@@ -141,7 +140,7 @@ function teenmode(enable: boolean) {
     });
     // close settings on click
     const setbtn = document.querySelector("#navset a");
-    document.body.addEventListener("click", async (ev: MouseEvent) => {
+    document.body.addEventListener("click", (ev: MouseEvent) => {
         if (setcontainer.contains(ev.target as Node) ||
             ev.target === setbtn ||
             setcontainer.innerHTML === "")
@@ -149,8 +148,7 @@ function teenmode(enable: boolean) {
             return;
         }
         setcontainer.style.opacity = "0";
-        await sleep(100);
-        setcontainer.innerHTML = "";
+        setTimeout(() => setcontainer.innerHTML = "", 1e2);
     });
     // big photo viewer
     layer.photos({
