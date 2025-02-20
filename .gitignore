@@ -1,3 +1,6 @@
 # output
 *.js
 *.map
+
+# node
+node_modules/
