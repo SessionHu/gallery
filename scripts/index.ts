@@ -48,16 +48,17 @@ async function sleep(ms: number) {
 }
 
 function teenmode(enable: boolean) {
-    if (enable) {
-        layui.layer.msg("Teen mode enabled");
-        document.querySelectorAll(".img-container img").forEach((elem: Element) => {
-            (elem as HTMLElement).style.filter = "blur(4px)";
-        });
-    } else {
-        document.querySelectorAll(".img-container img").forEach((elem: Element) => {
-            (elem as HTMLElement).style.filter = "none";
-        });
-    }
+  const elems = document.querySelectorAll(".img-container img");
+  if (enable) {
+    layui.layer.msg("Teen mode enabled");
+    elems.forEach((elem) => {
+      (elem as HTMLElement).style.filter = "blur(4px)";
+    });
+  } else {
+    elems.forEach((elem) => {
+      (elem as HTMLElement).style.filter = "none";
+    });
+  }
 }
 
 (async () => {
@@ -71,13 +72,12 @@ function teenmode(enable: boolean) {
     shufArray(json.img);
     const elems: Promise<HTMLDivElement>[] = [];
     for (const img of json.img) {
-      elems.push(new Promise<HTMLImageElement>((resolve) => {
-        // img
-        resolve(getImage(img));
-      }).then((imgElem) => {
+      elems.push((async () => {
         // div
         const imgContainer = document.createElement("div");
         imgContainer.classList.add("img-container");
+        // img
+        const imgElem = await getImage(img);
         // imgElem.src = ""; // for debug
         imgElem.title = imgElem.alt;
         imgElem.alt = img.name;
@@ -95,9 +95,9 @@ function teenmode(enable: boolean) {
         `;
         imgContainer.appendChild(imgDesc);
         // append
-        galleryContainer.appendChild(imgContainer);
+        galleryContainer.insertAdjacentElement('afterbegin', imgContainer);
         return imgContainer;
-      }));
+      })());
     }
     await Promise.all(elems);
     // settings preset
@@ -111,9 +111,9 @@ function teenmode(enable: boolean) {
     // settings entrace
     const setcontainer = document.body.querySelector(".set-container") as HTMLElement;
     layui.util.on("lay-on", {
-        "set-btn": async function () {
-            window.setTimeout(() => this.classList.remove("layui-this"), 200);
-            if (setcontainer.innerHTML !== "") {
+        "set-btn": function () {
+            setTimeout(() => this.classList.remove("layui-this"), 200);
+            if (setcontainer.innerHTML) {
                 // hide
                 setcontainer.style.opacity = "0";
                 setTimeout(() => setcontainer.innerHTML = "", 1e2);
