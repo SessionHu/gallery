@@ -28,6 +28,8 @@ declare const layui: {
 
 declare const layer: Layer;
 
+import './css/style.scss';
+
 interface FitROMItem {
   name: string,
   mtime: number,

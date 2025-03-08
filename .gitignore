@@ -1,6 +1,8 @@
 # output
-*.js
-*.map
+dist/
 
 # node
 node_modules/
+
+# swp
+*.swp
