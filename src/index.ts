@@ -2,6 +2,7 @@ declare const getIndexJson: () => Promise<{img: FitROMItem[]}>;
 declare const getImage: (item: FitROMItem) => Promise<HTMLImageElement>;
 
 type Layer = {
+    alert: (content: string, options?: any, yes?: (index: number) => any) => number,
     load: (icon: number, options?: any) => number,
     open: (options: any) => void,
     tips: (content: string, elem: Element | string, options?: any) => void,
@@ -67,6 +68,11 @@ function teenmode(enable: boolean) {
     // show loading layer
     const loadLayer: number = layer.load(1, {
         shade: [.8, "#000"]
+    });
+    layer.open({
+      content: 'data:text/plain;charset=utf8,本站已经长期没有维护, 加载速度缓慢甚至无限加载属于正常现象, 现已加入重构计划',
+      skin: 'layui-layer-win10',
+      type: 2
     });
     const galleryContainer: HTMLElement = document.getElementById("gallery-container") as HTMLElement;
     // fetch
