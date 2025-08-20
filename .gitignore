@@ -1,5 +1,5 @@
 # output
-dist/
+public/dist/
 
 # node
 node_modules/

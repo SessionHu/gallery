@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+@use 'sass:math';
+@use 'sass:string';
+
+$skew-n: skew(-30deg);
+
+nav#nav {
+  position: fixed;
+  top: 8px;
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  $height: 48px;
+  height: $height + 4px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  > div {
+    $extw: math.tan(30deg) * $height;
+    height: $height;
+    position: relative;
+    display: flex;
+    &::after {
+      content: '';
+      background-color: #111a;
+      display: block;
+      height: 100%;
+      width: string.unquote('calc(#{$extw} + 100%)');
+      position: absolute;
+      z-index: -1;
+      transform: string.unquote('translateX(-#{math.div($extw, 2)})') $skew-n;
+      box-shadow: 2px 2px 2px #1113;
+    }
+    > ul {
+      height: inherit;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      gap: 16px;
+      position: relative;
+      > li {
+        display: block;
+        a {
+          color: #fff;
+          text-decoration-line: none;
+          &:hover {
+            color: #6cf;
+          }
+        }
+      }
+      &#nav-left {
+        padding-left: 16px;
+        padding-right: 8px;
+      }
+      &#nav-right {
+        padding-left: 8px;
+        padding-right: 16px;
+      }
+    }
+  }
+}

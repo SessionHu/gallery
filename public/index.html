@@ -1,46 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
+<html>
+  <head>
+    <meta charset="UTF-8" />
     <title>SessXGallery - Powered by PhigrOS</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://unpkg.com/layui@2.9.15/dist/css/layui.css" rel="stylesheet">
-    <script src="https://unpkg.com/layui@2.9.15/dist/layui.js"></script>
-    
-    <script src="https://fitrom.xhustudio.eu.org/getImage.js"></script>
-
-</head>
-
-<body>
-
-    <ul class="layui-nav" id="navnav">
-        <li class="layui-nav-item">
-            <a href="https://sess.xhustudio.eu.org/">B10g</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="#">Ga11ery</a>
-        </li>
-    </ul>
-
-    <ul class="layui-nav" id="navset">
-        <li class="layui-nav-item" lay-on="set-btn">
-            <a class="layui-icon layui-icon-set"></a>
-        </li>
-    </ul>
-
-    <div id="background-main"></div>
-
-    <div class="layui-container">
-        <div id="gallery-container"></div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111111" />
+    <base href="/" />
+    <link rel="stylesheet" href="dist/index.css" />
+    <script src="dist/index.js" type="module"></script>
+  </head>
+  <body>
+    <div id="backgrounds">
+      <div></div><div></div><div></div><div></div>
     </div>
-
-    <div class="set-container"></div>
-
-</body>
-
+    <nav id="nav"></nav>
+    <script src="dist/debug.js"></script>
+  </body>
 </html>
