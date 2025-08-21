@@ -14,7 +14,8 @@ const ctx = await context({
   entryPoints: [
     path.resolve(srcDir, 'index.ts'),
     path.resolve(srcDir, 'worker.ts'),
-    path.resolve(srcDir, 'debug.ts')
+    path.resolve(srcDir, 'debug.ts'),
+    path.resolve(srcDir, 'css/index.scss')
   ],
   // 输出目录
   outdir: distDir,

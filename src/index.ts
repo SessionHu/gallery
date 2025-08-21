@@ -1,5 +1,3 @@
-import './css/index.scss';
-
 import './background';
 import './nav';
 
