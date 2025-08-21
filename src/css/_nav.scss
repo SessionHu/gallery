@@ -35,18 +35,31 @@ nav#nav {
       height: inherit;
       width: fit-content;
       display: flex;
-      align-items: center;
       margin: 0;
       gap: 16px;
       position: relative;
       > li {
-        display: block;
+        height: inherit;
+        display: flex;
+        align-items: center;
         a {
           color: #fff;
           text-decoration-line: none;
-          &:hover {
-            color: #6cf;
-          }
+          transition: color 500ms ease-in-out;
+        }
+        &:hover a {
+          color: #6cf;
+        }
+        transition: background-size 500ms ease-in-out;
+        background: {
+          image: linear-gradient(#6cf);
+          size: 0 2px;
+          repeat: no-repeat;
+          position: right bottom;
+        }
+        &:hover {
+          background-size: 100% 2px;
+          background-position-x: left;
         }
       }
       &#nav-left {
