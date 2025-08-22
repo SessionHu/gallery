@@ -1,5 +1,6 @@
 import './background';
 import './nav';
+import './gallery';
 
 import pLimit from 'p-limit';
 

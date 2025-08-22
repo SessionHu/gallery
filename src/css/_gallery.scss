@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+@use 'sass:math';
+
+@use '_value.scss';
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 64px;
+  $h: 200px;
+  $w: 300px;
+  $extw: $h * math.tan(value.$angle);
+  padding-right: $extw;
+  gap: 12px;
+  > div {
+    height: $h;
+    width: $w;
+    margin-bottom: 48px;
+    position: relative;
+    transition: transform 500ms ease-in-out;
+    > img {
+      position: absolute;
+      height: inherit;
+      width: $w + $extw;
+      clip-path: polygon($extw 0, 100% 0, calc(100% - $extw) 100%, 0 100%);
+      object-fit: cover;
+    }
+    > div::after {
+      content: '';
+      position: absolute;
+      transform: value.$skew-n translateX(math.div($extw, 2));
+      box-shadow: value.$shadow;
+      height: $h;
+      width: $w;
+      background-color: value.$card-bg-color;
+    }
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+}

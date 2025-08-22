@@ -24,6 +24,9 @@ navrightul.id = 'nav-right';
   const a = document.createElement('a');
   a.textContent = 'settings';
   a.href = '#';
+  a.addEventListener('click', (e) => {
+    console.log(e);
+  });
   e.appendChild(a);
   navrightul.appendChild(e);
 }

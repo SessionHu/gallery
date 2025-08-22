@@ -2,7 +2,9 @@
 
 @use '_background.scss';
 @use '_nav.scss';
+@use '_gallery.scss';
 
 :root {
   font-family: sans-serif;
+  scrollbar-width: thin;
 }

@@ -11,15 +11,6 @@ body {
   height: 100dvh;
   margin: 0;
   background: #111;
-  &:before {
-    content: '';
-    height: 100vh;
-    width: 100vw;
-    background: linear-gradient(132deg, #ffc0cbcf, #66ccff66 90%);
-    filter: url(#svg-filter);
-    position: fixed;
-    z-index: -1;
-  }
 }
 
 svg:has(#svg-filter) {
@@ -35,24 +26,29 @@ svg:has(#svg-filter) {
 }
 
 #backgrounds {
-  overflow: hidden;
-  height: 100dvh;
-  width: 100vw;
   position: fixed;
   top: 0;
   z-index: -1;
+  &::before {
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(132deg, #ffc0cbcf, #66ccff66 90%);
+    filter: url(#svg-filter);
+    position: absolute;
+  }
   @for $i from 1 through 4 {
     > div:nth-child(#{$i}) {
       position: absolute;
+      animation: backgrounds-animation-moveup #{$i * 30}s linear infinite;
       height: #{math.div(8, $i)}px;
       width: #{math.div(8, $i)}px;
       border-radius: 100%;
       box-shadow: getShadows($i * 32);
-      animation: backgrounds-animation-moveup #{$i * 30}s linear infinite;
       &::after {
         content: '';
-        box-shadow: inherit;
         position: inherit;
+        box-shadow: inherit;
         width: inherit;
         height: inherit;
         border-radius: inherit;
