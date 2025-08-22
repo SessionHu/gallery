@@ -4,20 +4,21 @@
 @use 'sass:string';
 
 html {
-  background: #111;
   color-scheme: dark;
 }
 
 body {
   height: 100dvh;
   margin: 0;
+  background: #111;
   &:before {
     content: '';
-    height: 100dvh;
+    height: 100vh;
     width: 100vw;
     background: linear-gradient(132deg, #ffc0cbcf, #66ccff66 90%);
     filter: url(#svg-filter);
     position: fixed;
+    z-index: -1;
   }
 }
 
@@ -28,7 +29,7 @@ svg:has(#svg-filter) {
 @function getShadows($n) {
   $shadows: '';
   @for $i from 1 through $n {
-    $shadows: #{$shadows}, string.unquote('#{math.div(math.random(1000), 10)}vw #{math.div(math.random(1000), 10)}vh 2px #fffa');
+    $shadows: #{$shadows}, string.unquote('#{math.div(math.random(10000), 100)}vw #{math.div(math.random(10000), 100)}vh 2px #fffa');
   }
   @return $shadows;
 }
@@ -39,15 +40,16 @@ svg:has(#svg-filter) {
   width: 100vw;
   position: fixed;
   top: 0;
+  z-index: -1;
   @for $i from 1 through 4 {
     > div:nth-child(#{$i}) {
-      position: inherit;
+      position: absolute;
       height: #{math.div(8, $i)}px;
       width: #{math.div(8, $i)}px;
       border-radius: 100%;
       box-shadow: getShadows($i * 32);
       animation: backgrounds-animation-moveup #{$i * 30}s linear infinite;
-      &:after {
+      &::after {
         content: '';
         box-shadow: inherit;
         position: inherit;
