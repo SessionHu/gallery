@@ -20,8 +20,15 @@
     margin-bottom: 48px;
     position: relative;
     transition: transform 500ms ease-in-out;
-    > img {
+    pointer-events: none;
+    &:has(:hover) {
+      transform: scale(1.04);
+    }
+    > * {
       position: absolute;
+      pointer-events: auto;
+    }
+    > img {
       height: inherit;
       width: $w + $extw;
       clip-path: polygon($extw 0, 100% 0, calc(100% - $extw) 100%, 0 100%);
@@ -29,15 +36,12 @@
     }
     > div::after {
       content: '';
-      position: absolute;
+      position: inherit;
       transform: value.$skew-n translateX(math.div($extw, 2));
       box-shadow: value.$shadow;
       height: $h;
       width: $w;
       background-color: value.$card-bg-color;
-    }
-    &:hover {
-      transform: scale(1.04);
     }
   }
 }
