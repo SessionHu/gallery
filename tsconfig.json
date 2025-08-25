@@ -7,10 +7,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "types": [
-      "dom",
-      "dom.iterable"
-    ],
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,

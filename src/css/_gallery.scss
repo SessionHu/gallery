@@ -8,11 +8,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 64px;
   $h: 200px;
   $w: 300px;
   $extw: $h * math.tan(value.$angle);
-  padding-right: $extw;
+  padding: 64px $extw 12px 0;
   gap: 12px;
   > div {
     height: $h;
@@ -23,25 +22,69 @@
     pointer-events: none;
     &:has(:hover) {
       transform: scale(1.04);
+      > div {
+        $he: 48px;
+        $extwe: $he * math.tan(value.$angle);
+        height: $h + $he;
+        &::before {
+          transform: value.$skew-n translateX(math.div($extw - $extwe, 2));
+        }
+        > div {
+          transform: translateX(-$extwe);
+        }
+      }
     }
     > * {
       position: absolute;
-      pointer-events: auto;
     }
     > img {
       height: inherit;
       width: $w + $extw;
-      clip-path: polygon($extw 0, 100% 0, calc(100% - $extw) 100%, 0 100%);
+      clip-path: polygon($extw 0, 100% 0, $w 100%, 0 100%);
       object-fit: cover;
+      pointer-events: auto;
     }
-    > div::after {
-      content: '';
-      position: inherit;
-      transform: value.$skew-n translateX(math.div($extw, 2));
-      box-shadow: value.$shadow;
+    > div {
       height: $h;
       width: $w;
-      background-color: value.$card-bg-color;
+      transition: height 500ms ease-in-out;
+      > div {
+        pointer-events: none;
+        position: absolute;
+        bottom: 0;
+        transition: transform 500ms ease-in-out;
+        $bh: math.div(48px, 3);
+        > * {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          height: $bh;
+          line-height: $bh;
+          display: block;
+          position: relative;
+          padding: 0 12px;
+          $baseleft: math.tan(value.$angle) * $bh;
+          @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+              left: $baseleft * (3 - $i);
+            }
+          }
+        }
+      }
+      &::before {
+        content: '';
+        position: inherit;
+        height: inherit;
+        width: inherit;
+        transform: value.$skew-n translateX(math.div($extw, 2));
+        box-shadow: value.$shadow;
+        background-color: value.$card-bg-color;
+        transition: {
+          property: transform, height;
+          duration: .5s;
+          timing-function: inherit;
+        }
+        pointer-events: auto;
+      }
     }
   }
 }
